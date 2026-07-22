@@ -1,0 +1,46 @@
+Standard operating procedure
+Set Up SSH Key Authentication on a Linux Server
+[xcompanyx]
+[422 Blazeit Road, LA]
+[204-304-6241]
+
+Approved Table: 
+Version	 Date	      Name	                                Designation
+  1.0 -  2026-11-24	Louis Creed (louiscreed@x.ca)	        Author
+  1.1 -  2026-11-25	Jack Torrance (jacktorrance@x.ca)     Reviewer
+  1.1	-  2026-11-25	Randall Flagg (randallflagg@x.ca)     Approver
+
+Purpose
+# [Briefly describe the reason you are writing this SOP and any broad information about the procedure.]
+This document outlines the standardized procedures to set up SSH Key Authentication on a Linux Server, ensuring consistency, proper configurations, and adherence to best practices.
+
+Scope
+# [Describe who this document applies to and under what circumstances.]
+The SOP covers the processes and guidelines to set up SSH Key Authentication on a Linux Server, including:
+  1. Pepare a Linux Server for remote administration
+  2. Install and verifying SSH service
+  3. Generate an SSH key pair on a client computer
+  4. Transfer public key to the server
+  5. Configure the Linux user account for key-based access
+  6. Connect to server using private key
+  7. Verify that SSH key authentication works
+  8. Configure basic firewall access for SSH
+  9. Troubleshoot common connection and permission problems
+  10. Apply basic SSH security principles
+
+Prerequisites
+
+Technical requirements
+
+Definitions
+# [Define any unknown words or acronyms that can help the reader understand this SOP.]
+
+Procedure steps
+# [Describe each step of the procedure and mention any known hazards or difficulties.]
+Step 1:
+Step 2:
+Step 3:
+Step 4:
+Step 5:
+Reference or Related Documents
+# [Any other documents related to this SOP.]
