@@ -6,16 +6,15 @@ Set Up SSH Key Authentication on a Linux Server
 
 Approved Table: 
 Version	 Date	      Name	                                Designation
-  1.0 -  2026-11-24	Louis Creed (louiscreed@x.ca)	        Author
+  1.0 -  2026-11-24	Louis Creed   (louiscreed@x.ca)	      Author
   1.1 -  2026-11-25	Jack Torrance (jacktorrance@x.ca)     Reviewer
   1.1	-  2026-11-25	Randall Flagg (randallflagg@x.ca)     Approver
 
 Purpose
-# [Briefly describe the reason you are writing this SOP and any broad information about the procedure.]
 This document outlines the standardized procedures to set up SSH Key Authentication on a Linux Server, ensuring consistency, proper configurations, and adherence to best practices.
 
 Scope
-# [Describe who this document applies to and under what circumstances.]
+Intended for IT department employees
 The SOP covers the processes and guidelines to set up SSH Key Authentication on a Linux Server, including:
   1. Pepare a Linux Server for remote administration
   2. Install and verifying SSH service
@@ -29,18 +28,105 @@ The SOP covers the processes and guidelines to set up SSH Key Authentication on 
   10. Apply basic SSH security principles
 
 Prerequisites
+  - Admin access to server console, or access to admin user
+  - Admin user or regular user account on server; to be used for remote administration
+  - Admin user or regular user account on client
+  - Network connectivity between the server and the client
+  - Offical permision/designation given by IT admin to 
 
 Technical requirements
-
+  - Server OS: Company requires RHEL Linux OS on all servers and clients
+  - SSH package: Must have 'openssh-server' package installed on server, and 'openssh-client' package installed on the client. 
+  - System manager: Must have 'systemd' and 'systemctl' packages installed; both server and client
+  - Firewall: Must have 'firewalld' installed on both server and client
+  
 Definitions
-# [Define any unknown words or acronyms that can help the reader understand this SOP.]
+  - Dir: Abbreviated (shortend) directory
+  - SSH: Secure Shell, is used to encrypt remote access
+  - OpenSSH: The open-source implementation of SSH for Linux systems
+  - Client: The computer used for remote administration
+  - Server: The Linux Server that is going to remotely administered
+  - Client User: User on the client computer 
+  - Target User: User on the Linux Server
+  - Private Key: A secret key stored on the client; should NEVER be shared
+  - Public Key: A key copied from the client to the server for authentication; can be shared
+  - Authorized Keys: Per-user file in a server that stores approved public keys
+  - Key-based authentication: Form of SSH login; validates clients possession of a matching private key.
 
 Procedure steps
-# [Describe each step of the procedure and mention any known hazards or difficulties.]
-Step 1:
-Step 2:
-Step 3:
-Step 4:
-Step 5:
-Reference or Related Documents
-# [Any other documents related to this SOP.]
+Step 1: Prepare the Linux Server for remote access
+  - Sign into the server with an admin user or before entering commands enter 'sudo' command for elevated privilages
+  - Confirm host has network connectivity; 'ip a' and record the IPv4 address
+  - Verify updates; 'sudo dnf check-update'
+
+Step 2: Install and verify SSH service on server and client
+  - Server: Install the OpenSSH server package; 'sudo dnf install openssh-server'
+  - Client: Install the OpenSSH client package; 'sudo dnf install openssh-client'
+  - Enable the SSH service to automatically start at boot; 'sudo systemctl enable --now sshd'
+  - Verify service is running; 'sudo systemctl status sshd'
+
+Step 3: Generate an SSH key pair on client
+  - Create a key pair on the client; 'sudo ssh-keygen'
+      # private key stored in default location; Ex (~/home/[username]/.ssh/)
+      # public key stored in default location; Ex (~/home/[username]/.ssh/)
+### The above locations only apply to the client NOT the target user
+ - Identify / verify the keys on Client; 'ls [filepath]'
+      # identify the public and private key; public key ends with '.pub', private key does not
+
+Step 4: Transfer public key to the server
+  - 'sudo ssh-copy-id [TargetUser_username]@[Server_Hostname] or [Server_IPv4_address]'
+  - You will be prompted for the users password
+
+Step 5: Configure the Linux user account for key-based access
+  - Log on to the Linux Server as an administrator; not the Target User you wish to use remotely - unless they happen to be the same user
+  - Verify the public key exists in the Target Users dir; 'ls ~/home/[TargetUser_username]/.ssh/authorized_keys'
+      # by default, the public key should be stored in (~/home/[TargetUser_username]/.ssh/authorized_keys)
+      # this only applies to the remote server after using the 'ssh-copy-id' command
+  - Set file permissions; 'chmod 600 ~/home/[TargetUser_username]/.ssh/authorized_keys' and 'chmod 700 ~/home/[TargetUser_username]/.ssh'
+
+Step 6: Connect to the server using private key
+  - Test SSH connectivity from the client using the private key; 'ssh -i ~/home/[Client_username]/.ssh/[private_key] [TargetUser_username]@[Server_hostname] or [Server_IPv4_address]'
+
+Step 7: Verify that SSH key authentication works
+  - Test SSH connectivity from the client; 'ssh [TargetUser_username]@[Server_hostname] or [Server_IPv4_address]'
+
+Step 8: Configure basic firewall access for SSH
+  - Allow inbound SSH; 'sudo firewall-cmd --permanent --add-service=ssh'
+  - Reload the service; 'sudo firewall-cmd --reload'
+  - Verify the firewall rules; 'sudo firewall-cmd --list-services'
+
+Step 9: Troubleshoot common connection and permission problems
+  - Default key locations include
+      # RemoteServer(PublicKey): (~/home/[username]/.ssh/authorized_keys)
+      # LocalComputer(Public&Private): (~/home/[username]/.ssh/)
+  - Confirm service is installed and running; 'sudo systemctl status sshd'
+  - When trying to ssh using the private key, IF you get an error saying private key is 'unprotected' or 'too open' 
+      # Fix the file permissions on Linux Server; 'chmod 600 ~/home/[TargetUser_username]/.ssh/authorized_keys' and 'chmod 700 ~/home/[TargetUser_username]/.ssh'
+
+Step 10: Apply basic SSH security practices
+  - Disable password authentication to protect against brute force attacks; 'sudo vim /etc/ssh/sshd_config'
+      # NOTE - only do this after verifying remote access with private key
+  - Use admin user accounts instead of root when possible
+  - Restrict access with firewall rules; see 'Step 8'
+
+Expected Results
+  The Linux Server should accept authorized keys and allow remote administrative access
+
+Verification
+  - SSH service is running and active; 'sudo systemctl status sshd'
+  - Client can connect with private key; 'ssh -i ~/home/[Client_username]/.ssh/authorized_keys [TargetUser_username]@[Server_hostname] or [Server_IPv4_address]'
+  - Firewall rules allow SSH; 'ssh [TargetUser_username]@[Server_hostname] or [Server_IPv4_address]' or 'ssh -i ~/home/[Client_username]/.ssh/authorized_keys [TargetUser_username]@[Server_hostname] or [Server_IPv4_address]'
+  - Server does not request a password, after disabling password authentication; log into the server remotely, does it prompt you for a password?
+
+Security considerations
+  - Protect private keys with a passphrase; 'sudo ssh-keygen -p -f ~/home/[username]/.ssh/[Private_Key_Name]
+
+References
+https://oneuptime.com/blog/post/2026-03-04-remote-system-administration-ssh-rhel-9/view
+https://www.digitalocean.com/community/tutorials/how-to-configure-ssh-key-based-authentication-on-a-linux-server
+https://servicenow.iu.edu/kb?id=kb_article_view&sysparm_article=KB0023919
+https://alexhost.com/faq/where-are-ssh-keys-stored-in-linux-and-how-to-manage-them-securely/
+https://docs.alliancecan.ca/wiki/Using_SSH_keys_in_Linux
+https://www.redhat.com/en/blog/key-based-authentication-ssh
+https://www.redhat.com/en/blog/configure-ssh-keygen
+
