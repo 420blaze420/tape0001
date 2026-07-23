@@ -2,5 +2,4 @@
 T0001
 
 
-Hello Jack
-The hotel needs a caretaker
+'You are the caretaker. You've always been the caretaker'
