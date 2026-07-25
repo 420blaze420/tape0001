@@ -1,6 +1,3 @@
-# tape0001
-
-
 # Standard operating procedure
 
 ## Set Up SSH Key Authentication on a Linux Server
