@@ -10,10 +10,11 @@ Set Up SSH Key Authentication on a Linux Server
 [59 Grey Road, LA]
 
 Approved Table: 
-Version	 Date	      Name	                                Designation
-  1.0 -  2026-11-24	Louis Creed   (louiscreed@x.ca)	      Author
-  1.1 -  2026-11-25	Jack Torrance (jacktorrance@x.ca)     Reviewer
-  1.1	-  2026-11-25	Randall Flagg (randallflagg@x.ca)     Approver
+| Version | Date | Name | Designation |
+| -------- | -------- | -------- | -------- |
+| 1.0 | 2026-11-24  | Louis Creed (louiscreed@x.ca) | Author |
+| 1.1 | 2026-11-25  | Jack Torrance (jacktorrance@x.ca) | Reviewer |
+| 1.1 | 2026-11-25  | Randall Flagg (randallflagg@x.ca) | Approver |
 
 Purpose
 
