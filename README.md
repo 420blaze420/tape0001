@@ -1,9 +1,9 @@
 # tape0001
 
 
-Standard operating procedure
+# Standard operating procedure
 
-Set Up SSH Key Authentication on a Linux Server
+## Set Up SSH Key Authentication on a Linux Server
 
 [Xcompanyx]
 
@@ -16,7 +16,7 @@ Approved Table:
 | 1.1 | 2026-11-25  | Jack Torrance (jacktorrance@x.ca) | Reviewer |
 | 1.1 | 2026-11-25  | Randall Flagg (randallflagg@x.ca) | Approver |
 
-Purpose
+### Purpose
 
 This document outlines the standardized procedures to set up SSH Key Authentication on a Linux Server, ensuring consistency, proper configurations, and adherence to best practices.
 
