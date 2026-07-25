@@ -78,7 +78,7 @@ Step 3: Generate an SSH key pair on client
   - Create a key pair on the client; 'sudo ssh-keygen'
       * private key stored in default location; Ex (~/home/[username]/.ssh/)
       * public key stored in default location; Ex (~/home/[username]/.ssh/)
-### The above locations only apply to the client NOT the target user
+The above locations only apply to the client NOT the target user
  - Identify / verify the keys on Client; 'ls [filepath]'
       * identify the public and private key; public key ends with '.pub', private key does not
 
