@@ -1,7 +1,6 @@
 # Standard operating procedure
 
 ## Set Up SSH Key Authentication on a Linux Server
-
 [Xcompanyx]
 
 [59 Grey Road, LA]
