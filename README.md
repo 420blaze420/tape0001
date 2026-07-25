@@ -119,23 +119,29 @@ Step 10: Apply basic SSH security practices
   - Use admin user accounts instead of root when possible
   - Restrict access with firewall rules; see 'Step 8'
 
-Expected Results
+### Expected Results
   The Linux Server should accept authorized keys and allow remote administrative access
 
-Verification
+### Verification
   - SSH service is running and active; 'sudo systemctl status sshd'
   - Client can connect with private key; 'ssh -i ~/home/[Client_username]/.ssh/authorized_keys [TargetUser_username]@[Server_hostname] or [Server_IPv4_address]'
   - Firewall rules allow SSH; 'ssh [TargetUser_username]@[Server_hostname] or [Server_IPv4_address]' or 'ssh -i ~/home/[Client_username]/.ssh/authorized_keys [TargetUser_username]@[Server_hostname] or [Server_IPv4_address]'
   - Server does not request a password, after disabling password authentication; log into the server remotely, does it prompt you for a password?
 
-Security considerations
+### Security considerations
   - Protect private keys with a passphrase; 'sudo ssh-keygen -p -f ~/home/[username]/.ssh/[Private_Key_Name]
 
-References
+### References
 https://oneuptime.com/blog/post/2026-03-04-remote-system-administration-ssh-rhel-9/view
+
 https://www.digitalocean.com/community/tutorials/how-to-configure-ssh-key-based-authentication-on-a-linux-server
+
 https://servicenow.iu.edu/kb?id=kb_article_view&sysparm_article=KB0023919
+
 https://alexhost.com/faq/where-are-ssh-keys-stored-in-linux-and-how-to-manage-them-securely/
+
 https://docs.alliancecan.ca/wiki/Using_SSH_keys_in_Linux
+
 https://www.redhat.com/en/blog/key-based-authentication-ssh
+
 https://www.redhat.com/en/blog/configure-ssh-keygen
