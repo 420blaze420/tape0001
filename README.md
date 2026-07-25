@@ -20,7 +20,7 @@ Approved Table:
 
 This document outlines the standardized procedures to set up SSH Key Authentication on a Linux Server, ensuring consistency, proper configurations, and adherence to best practices.
 
-Scope
+### Scope
 
 Intended for IT department employees
 
@@ -36,20 +36,20 @@ The SOP covers the processes and guidelines to set up SSH Key Authentication on 
   9. Troubleshoot common connection and permission problems
   10. Apply basic SSH security principles
 
-Prerequisites
+### Prerequisites
   - Admin access to server console, or access to admin user
   - Admin user or regular user account on server; to be used for remote administration
   - Admin user or regular user account on client
   - Network connectivity between the server and the client
   - Offical permision/designation given by IT admin to 
 
-Technical requirements
+### Technical requirements
   - Server OS: Company requires RHEL Linux OS on all servers and clients
   - SSH package: Must have 'openssh-server' package installed on server, and 'openssh-client' package installed on the client. 
   - System manager: Must have 'systemd' and 'systemctl' packages installed; both server and client
   - Firewall: Must have 'firewalld' installed on both server and client
   
-Definitions
+### Definitions
   - Dir: Abbreviated (shortend) directory
   - SSH: Secure Shell, is used to encrypt remote access
   - OpenSSH: The open-source implementation of SSH for Linux systems
@@ -62,7 +62,7 @@ Definitions
   - Authorized Keys: Per-user file in a server that stores approved public keys
   - Key-based authentication: Form of SSH login; validates clients possession of a matching private key.
 
-Procedure steps
+## Procedure steps
 
 Step 1: Prepare the Linux Server for remote access
   - Sign into the server with an admin user or before entering commands enter 'sudo' command for elevated privilages
