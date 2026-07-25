@@ -20,7 +20,9 @@ Purpose
 This document outlines the standardized procedures to set up SSH Key Authentication on a Linux Server, ensuring consistency, proper configurations, and adherence to best practices.
 
 Scope
+
 Intended for IT department employees
+
 The SOP covers the processes and guidelines to set up SSH Key Authentication on a Linux Server, including:
   1. Pepare a Linux Server for remote administration
   2. Install and verifying SSH service
@@ -60,6 +62,7 @@ Definitions
   - Key-based authentication: Form of SSH login; validates clients possession of a matching private key.
 
 Procedure steps
+
 Step 1: Prepare the Linux Server for remote access
   - Sign into the server with an admin user or before entering commands enter 'sudo' command for elevated privilages
   - Confirm host has network connectivity; 'ip a' and record the IPv4 address
@@ -73,11 +76,11 @@ Step 2: Install and verify SSH service on server and client
 
 Step 3: Generate an SSH key pair on client
   - Create a key pair on the client; 'sudo ssh-keygen'
-      # private key stored in default location; Ex (~/home/[username]/.ssh/)
-      # public key stored in default location; Ex (~/home/[username]/.ssh/)
+      * private key stored in default location; Ex (~/home/[username]/.ssh/)
+      * public key stored in default location; Ex (~/home/[username]/.ssh/)
 ### The above locations only apply to the client NOT the target user
  - Identify / verify the keys on Client; 'ls [filepath]'
-      # identify the public and private key; public key ends with '.pub', private key does not
+      * identify the public and private key; public key ends with '.pub', private key does not
 
 Step 4: Transfer public key to the server
   - 'sudo ssh-copy-id [TargetUser_username]@[Server_Hostname] or [Server_IPv4_address]'
@@ -86,8 +89,8 @@ Step 4: Transfer public key to the server
 Step 5: Configure the Linux user account for key-based access
   - Log on to the Linux Server as an administrator; not the Target User you wish to use remotely - unless they happen to be the same user
   - Verify the public key exists in the Target Users dir; 'ls ~/home/[TargetUser_username]/.ssh/authorized_keys'
-      # by default, the public key should be stored in (~/home/[TargetUser_username]/.ssh/authorized_keys)
-      # this only applies to the remote server after using the 'ssh-copy-id' command
+      * by default, the public key should be stored in (~/home/[TargetUser_username]/.ssh/authorized_keys)
+      * this only applies to the remote server after using the 'ssh-copy-id' command
   - Set file permissions; 'chmod 600 ~/home/[TargetUser_username]/.ssh/authorized_keys' and 'chmod 700 ~/home/[TargetUser_username]/.ssh'
 
 Step 6: Connect to the server using private key
@@ -103,15 +106,15 @@ Step 8: Configure basic firewall access for SSH
 
 Step 9: Troubleshoot common connection and permission problems
   - Default key locations include
-      # RemoteServer(PublicKey): (~/home/[username]/.ssh/authorized_keys)
-      # LocalComputer(Public&Private): (~/home/[username]/.ssh/)
+      * RemoteServer(PublicKey): (~/home/[username]/.ssh/authorized_keys)
+      * LocalComputer(Public&Private): (~/home/[username]/.ssh/)
   - Confirm service is installed and running; 'sudo systemctl status sshd'
   - When trying to ssh using the private key, IF you get an error saying private key is 'unprotected' or 'too open' 
-      # Fix the file permissions on Linux Server; 'chmod 600 ~/home/[TargetUser_username]/.ssh/authorized_keys' and 'chmod 700 ~/home/[TargetUser_username]/.ssh'
+      * Fix the file permissions on Linux Server; 'chmod 600 ~/home/[TargetUser_username]/.ssh/authorized_keys' and 'chmod 700 ~/home/[TargetUser_username]/.ssh'
 
 Step 10: Apply basic SSH security practices
   - Disable password authentication to protect against brute force attacks; 'sudo vim /etc/ssh/sshd_config'
-      # NOTE - only do this after verifying remote access with private key
+      * NOTE - only do this after verifying remote access with private key
   - Use admin user accounts instead of root when possible
   - Restrict access with firewall rules; see 'Step 8'
 
